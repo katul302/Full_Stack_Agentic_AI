@@ -1,0 +1,74 @@
+menu = [
+    "Masala Chai",
+    "Iced lemon tea",
+    "Geen tea",
+    "Iced Peach tea",
+    "Ginger tea"
+]
+
+
+# Version 1: capture only "Iced lemon tea"
+iced_tea = [tea for tea in menu if tea == "Iced lemon tea"]
+
+# Same result using a for loop
+iced_tea_loop = []
+for tea in menu:
+    if tea == "Iced lemon tea":
+        iced_tea_loop.append(tea)
+
+
+# Version 2: capture all iced teas
+all_iced_tea = [tea for tea in menu if "Iced" in tea]
+print("List comprehension:", all_iced_tea)
+
+# Same result using a for loop
+all_iced_tea_loop = []
+for tea in menu:
+    if "Iced" in tea:
+        all_iced_tea_loop.append(tea)
+print("For loop:", all_iced_tea_loop)
+
+
+# ## Explanation of the List Comprehension
+
+# ```python
+# iced_tea = [tea for tea in menu if tea == "Iced lemon tea"]
+# ```
+
+# This is a **Python list comprehension** — a concise, one-line way to build a new list by filtering or transforming an existing one.
+
+# ### Breaking it down piece by piece:
+
+# | Part | Meaning |
+# |------|---------|
+# | `[...]` | Creates a new list |
+# | `tea` (first) | The **expression** — what to put into the new list (each item as-is) |
+# | `for tea in menu` | **Iterates** over every item in the `menu` list, calling each one `tea` |
+# | `if tea == "Iced lemon tea"` | **Filter condition** — only include `tea` if it exactly matches `"Iced lemon tea"` |
+
+# ### What it does step by step:
+# 1. Goes through each item in `menu` one by one
+# 2. Checks: does this item **exactly equal** `"Iced lemon tea"`?
+# 3. If **yes** → adds it to the new list
+# 4. If **no** → skips it
+# 5. The final list is stored in `iced_tea`
+
+# ### Result:
+# ```python
+# iced_tea = ["Iced lemon tea"]
+# ```
+# Only one item matches the exact string `"Iced lemon tea"`, so the result is a list with just that one item.
+
+# ### Equivalent for-loop (shown in the file):
+# ```python
+# iced_tea_loop = []
+# for tea in menu:
+#     if tea == "Iced lemon tea":
+#         iced_tea_loop.append(tea)
+# ```
+# Both produce **identical results** — the list comprehension is just shorter and more "Pythonic".
+
+# ### Key difference vs. Version 2 in the file:
+# - `if tea == "Iced lemon tea"` → **exact match** (only catches `"Iced lemon tea"`)
+# - `if "Iced" in tea` → **partial match** (catches `"Iced lemon tea"` AND `"Iced Peach tea"`)
+

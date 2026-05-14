@@ -1,0 +1,156 @@
+favourite_chai = [
+    "Masala Chai", "Green Tea", "Masala Chai",
+    "Lemon Tea", "Green Tea", "Elaichi Tea"
+]
+
+
+unique_chai = {chai for chai in favourite_chai if len(chai) > 8}
+
+print(unique_chai)
+
+# What the set comprehension does:
+
+# unique_chai = {chai for chai in favourite_chai}
+# A set automatically removes exact duplicates. But Python string comparison is case-sensitive, meaning:
+
+# String	Treated as
+# "Masala chai"	≠ "Masala Chai" (different!)
+# "Green tea"	≠ "Green Tea" (different!)
+# So Python sees 6 unique strings (none are truly identical), and the output will be all 6 items — just in a random order (sets are unordered).
+
+# Expected output (order may vary):
+
+# {'Masala chai', 'Green tea', 'Masala Chai', 'Lemon Tea', 'Green Tea', 'Elaichi Tea'}
+# ✅ Fix: Normalize case before comparing
+# If you want "Masala chai" and "Masala Chai" to be treated as the same, convert everything to lowercase (or title case) first:
+
+
+# # Using .lower() to normalize
+# unique_chai = {chai.lower() for chai in favourite_chai}
+# print(unique_chai)
+# # Output: {'masala chai', 'green tea', 'lemon tea', 'elaichi tea'}
+# Now you get 4 truly unique teas because "Masala chai" and "Masala Chai" both become "masala chai" and are treated as duplicates.
+
+# Summary:
+# The set comprehension is working correctly — it removes exact duplicates
+# The "duplicates" in your list differ only in capitalization, so Python treats them as different strings
+# Use .lower() or .title() inside the comprehension to normalize case and get truly unique results
+
+# Task Completed
+
+# The set comprehension is removing duplicates correctly — the issue is case sensitivity. Python treats "Masala chai" and "Masala Chai" as two completely different strings because the c differs in case. Since none of the 6 strings are exactly identical, all 6 appear in the output (just in random order, since sets are unordered).
+
+# Fix: Normalize the case inside the comprehension using .lower():
+
+
+# unique_chai = {chai.lower() for chai in favourite_chai}
+# # Output: {'masala chai', 'green tea', 'lemon tea', 'elaichi tea'}
+# This gives you 4 truly unique teas by treating "Masala chai" and "Masala Chai" as the same string.
+
+
+recipes = {
+    "Masala Chai": ["ginger", "cardamom","clove"],
+    "Elaichi Chai": ["cardamom", "milk"],
+    "Spice Chai": ["ginger", "black pepper","clove"],
+    
+}
+
+unique_spices = {spice for ingredients in recipes.values() for spice in ingredients}
+
+
+print("$$$$")
+print(unique_spices)
+
+# Great question! Let me break it down in the simplest way possible.
+
+# ---
+
+# ### The Data (a dictionary of recipes):
+
+# ```python
+# recipes = {
+#     "Masala Chai":  ["ginger", "cardamom", "clove"],
+#     "Elaichi Chai": ["cardamom", "milk"],
+#     "Spice Chai":   ["ginger", "black pepper", "clove"],
+# }
+# ```
+
+# Think of it as a __menu book__ where each chai has a list of ingredients.
+
+# ---
+
+# ### The Line:
+
+# ```python
+# unique_spices = {spice for ingredients in recipes.values() for spice in ingredients}
+# ```
+
+# ### Read it like plain English:
+
+# > *"For each recipe's ingredient list, go through every spice in that list, and collect all unique spices."*
+
+# ---
+
+# ### Step-by-step walkthrough:
+
+# __Step 1:__ `recipes.values()` gives you all the ingredient lists:
+
+# ```javascript
+# ["ginger", "cardamom", "clove"]
+# ["cardamom", "milk"]
+# ["ginger", "black pepper", "clove"]
+# ```
+
+# __Step 2:__ `for ingredients in recipes.values()` — picks up __one list at a time__:
+
+# - First loop → `ingredients = ["ginger", "cardamom", "clove"]`
+# - Second loop → `ingredients = ["cardamom", "milk"]`
+# - Third loop → `ingredients = ["ginger", "black pepper", "clove"]`
+
+# __Step 3:__ `for spice in ingredients` — goes inside each list and picks __one spice at a time__:
+
+# ```javascript
+# ginger → cardamom → clove → cardamom → milk → ginger → black pepper → clove
+# ```
+
+# __Step 4:__ `{ }` (curly braces = set) — automatically __removes duplicates__:
+
+# ```python
+# {'ginger', 'cardamom', 'clove', 'milk', 'black pepper'}
+# ```
+
+# ---
+
+# ### Equivalent using nested for-loops:
+
+# ```python
+# unique_spices = set()
+# for ingredients in recipes.values():   # outer loop: each recipe's list
+#     for spice in ingredients:          # inner loop: each spice in that list
+#         unique_spices.add(spice)       # set ignores duplicates automatically
+# ```
+
+# The set comprehension does __exactly the same thing__ in one line! 🎯
+
+# ---
+
+# ### Simple mental model:
+
+# ```javascript
+# { what_to_collect   outer_loop              inner_loop          }
+# { spice             for ingredients in ...  for spice in ...    }
+# ```
+
+# - __Outer loop first__ → opens each ingredient list
+# - __Inner loop second__ → picks each spice from that list
+# - __Set__ → keeps only unique ones
+
+# Task Completed
+
+# The line `{spice for ingredients in recipes.values() for spice in ingredients}` is a __nested set comprehension__. It uses two `for` loops in one line:
+
+# 1. __Outer loop__ (`for ingredients in recipes.values()`) — iterates over each recipe's ingredient list
+# 2. __Inner loop__ (`for spice in ingredients`) — digs into each list and picks every spice
+# 3. __`{ }`__ (set) — automatically discards duplicates like `"ginger"` and `"clove"` that appear in multiple recipes
+
+# The result is a flat set of all unique spices across all recipes: `{'ginger', 'cardamom', 'clove', 'milk', 'black pepper'}`.
